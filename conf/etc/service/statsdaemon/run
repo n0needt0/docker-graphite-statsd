@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec /var/statsdaemon/statsdaemon -address=":8125" -debug=false -delete-gauges=true -flush-interval=60 -graphite="127.0.0.1:2003" -max-udp-packet-size=1472 -persist-count-keys=60 -postfix="" -prefix="" -receive-counter="" -tcpaddr="" -version=false >> /var/log/statsdaemon.log 2>&1

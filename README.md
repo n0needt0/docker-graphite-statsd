@@ -18,12 +18,21 @@ This image will have you running & collecting stats in just a few minutes.
 docker run -d\
  --name graphite\
  --restart=always\
- -p 80:80\
+ -p 83:80\
  -p 2003-2004:2003-2004\
  -p 2023-2024:2023-2024\
  -p 8125:8125/udp\
  -p 8126:8126\
- hopsoft/graphite-statsd
+ n0needt0/graphite-statsd
+```
+
+##Or better you only need input and output
+```
+docker run -d\
+ --name graphite\
+ --restart=always\
+ -v /opt/graphite/data:/opt/graphite/storage\
+  -p 83:80 -p 8145:8125/udp n0needt0/graphite-statsd
 ```
 
 This starts a Docker container named: **graphite**
@@ -57,7 +66,6 @@ Host              | Container                  | Notes
 DOCKER ASSIGNED   | /opt/graphite/conf         | graphite config
 DOCKER ASSIGNED   | /opt/graphite/storage      | graphite stats storage
 DOCKER ASSIGNED   | /etc/nginx                 | nginx config
-DOCKER ASSIGNED   | /opt/statsd                | statsd config
 DOCKER ASSIGNED   | /etc/logrotate.d           | logrotate config
 DOCKER ASSIGNED   | /var/log                   | log files
 

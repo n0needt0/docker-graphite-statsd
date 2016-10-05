@@ -46,9 +46,9 @@ RUN git clone -b 0.9.15 --depth 1 https://github.com/graphite-project/carbon.git
 WORKDIR /usr/local/src/carbon
 RUN python ./setup.py install
 
-# install statsd
-RUN git clone -b v0.7.2 https://github.com/etsy/statsd.git /opt/statsd
-ADD conf/opt/statsd/config.js /opt/statsd/config.js
+# install statsdaemon
+ADD conf/statsdaemon.deb /tmp/statsdaemon.deb
+RUN dpkg -i /tmp/statsdaemon.deb
 
 # config nginx
 RUN rm /etc/nginx/sites-enabled/default
@@ -67,7 +67,7 @@ ADD conf/etc/logrotate.d/graphite-statsd /etc/logrotate.d/graphite-statsd
 ADD conf/etc/service/carbon/run /etc/service/carbon/run
 ADD conf/etc/service/carbon-aggregator/run /etc/service/carbon-aggregator/run
 ADD conf/etc/service/graphite/run /etc/service/graphite/run
-ADD conf/etc/service/statsd/run /etc/service/statsd/run
+ADD conf/etc/service/statsdaemon/run /etc/service/statsdaemon/run
 ADD conf/etc/service/nginx/run /etc/service/nginx/run
 
 # default conf setup
@@ -80,7 +80,7 @@ RUN apt-get clean\
 
 # defaults
 EXPOSE 80 2003-2004 2023-2024 8125/udp 8126
-VOLUME ["/opt/graphite/conf", "/opt/graphite/storage", "/etc/nginx", "/opt/statsd", "/etc/logrotate.d", "/var/log"]
+VOLUME ["/opt/graphite/conf", "/opt/graphite/storage", "/etc/nginx", "/etc/logrotate.d", "/var/log"]
 WORKDIR /
 ENV HOME /root
 CMD ["/sbin/my_init"]
