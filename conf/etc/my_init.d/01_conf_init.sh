@@ -1,5 +1,9 @@
 #!/bin/bash
 
+#UTC timezone
+echo "Etc/UTC" | tee /etc/timezone
+dpkg-reconfigure --frontend noninteractive tzdata
+
 conf_dir=/etc/graphite-statsd/conf
 
 # auto setup graphite with default configs if /opt/graphite is missing

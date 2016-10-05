@@ -1,0 +1,1 @@
+docker run -d --name=ganglia -p 8080:80 -p 2345:2345 -p 8648:8648 --volume=/srv/docker/ganglia/etc/ganglia:/etc/ganglia --volume=/srv/docker/ganglia/etc/apache2/:/etc/apache2/sites-enabled --volume=/srv/docker/ganglia/lib/ganglia/:/var/lib/ganglia particlekit/ganglia
