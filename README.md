@@ -1,6 +1,6 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/hopsoft/graphite-statsd.svg?style=flat)](https://hub.docker.com/r/hopsoft/graphite-statsd/)
 
-# Docker Image for Graphite & Statsd
+# Docker Image for Graphite & Statsdaemon
 
 ## Get Graphite & Statsd running instantly
 
@@ -31,8 +31,8 @@ docker run -d\
 docker run -d\
  --name graphite\
  --restart=always\
- -v /opt/graphite/data:/opt/graphite/storage\
-  -p 83:80 -p 8145:8125/udp n0needt0/graphite-statsd
+ -v /srv/docker/graphite/opt/graphite/storage:/opt/graphite/storage\
+  -p 8333:80 -p 8145:8125/udp n0needt0/docker-graphite-statsd
 ```
 
 This starts a Docker container named: **graphite**
