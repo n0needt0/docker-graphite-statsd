@@ -14,6 +14,14 @@ This image will have you running & collecting stats in just a few minutes.
 
 ## Quick Start
 
+docker run -d\
+ --name graphite\
+ --restart=always\
+ -v /srv/docker/graphite/opt/graphite/storage:/opt/graphite/storage\
+ -v /srv/docker/graphite/etc/nginx:/etc/nginx\
+ -v /srv/docker/graphite/var/log:/var/log\
+ -p 443:443 -p 8145:8125/udp n0needt0/docker-graphite-statsd
+
 ```sh
 docker run -d\
  --name graphite\
@@ -32,6 +40,7 @@ docker run -d\
  --name graphite\
  --restart=always\
  -v /srv/docker/graphite/opt/graphite/storage:/opt/graphite/storage\
+ -v /srv/docker/graphite/var/log:/var/log\
   -p 8333:80 -p 8145:8125/udp n0needt0/docker-graphite-statsd
 ```
 
@@ -178,4 +187,4 @@ docker run -d\
 Build the image yourself.
 
 1. `git clone https://github.com/hopsoft/docker-graphite-statsd.git`
-1. `docker build -t hopsoft/graphite-statsd .`
+1. `docker build -t n0needt0/graphite-statsd-nonginx .`

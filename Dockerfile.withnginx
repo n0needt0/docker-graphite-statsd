@@ -1,4 +1,4 @@
-FROM phusion/baseimage:latest
+FROM phusion/baseimage:0.9.18
 MAINTAINER Nathan Hopkins <natehop@gmail.com>
 
 #RUN echo deb http://archive.ubuntu.com/ubuntu $(lsb_release -cs) main universe > /etc/apt/sources.list.d/universe.list
@@ -52,9 +52,8 @@ RUN dpkg -i /tmp/statsdaemon.deb
 
 # config nginx
 RUN rm /etc/nginx/sites-enabled/default
-ADD conf/etc/nginx/ssl /etc/nginx/ssl
 ADD conf/etc/nginx/nginx.conf /etc/nginx/nginx.conf
-ADD conf/etc/nginx/sites-enabled/graphite-statsd.conf /etc/nginx/sites-enabled/graphite-statsd.nossl.conf
+ADD conf/etc/nginx/sites-enabled/graphite-statsd.conf /etc/nginx/sites-enabled/graphite-statsd.conf
 
 # init django admin
 ADD conf/usr/local/bin/django_admin_init.exp /usr/local/bin/django_admin_init.exp
@@ -63,8 +62,6 @@ RUN /usr/local/bin/django_admin_init.exp
 # logging support
 RUN mkdir -p /var/log/carbon /var/log/graphite /var/log/nginx
 ADD conf/etc/logrotate.d/graphite-statsd /etc/logrotate.d/graphite-statsd
-#all
-RUN chmod 644 /etc/logrotate.d/*
 
 # daemons
 ADD conf/etc/service/carbon/run /etc/service/carbon/run
@@ -82,8 +79,8 @@ RUN apt-get clean\
  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # defaults
-EXPOSE 80 2003-2004 2023-2024 8125/udp 8126
-VOLUME ["/opt/graphite/conf", "/opt/graphite/storage", "/etc/logrotate.d", "/var/log"]
+EXPOSE 443 80 8080 2003-2004 2023-2024 8125/udp 8126
+VOLUME ["/opt/graphite/conf", "/opt/graphite/storage", "/etc/nginx/nginx.conf", "/etc/logrotate.d", "/var/log"]
 WORKDIR /
 ENV HOME /root
 CMD ["/sbin/my_init"]
